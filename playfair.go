@@ -5,6 +5,11 @@ import ("fmt"
 
 func main() {
 	keyword :="keyword"
+	letters := initializeDataSet(keyword)
+	fmt.Println(letters[0][0])
+}
+
+func initializeDataSet(keyword string) [5][5]string {
 	x :=0
 	pos := 1
 	alpos :=1
@@ -35,4 +40,5 @@ func main() {
 		}
 		x++
 	}
+	return letters
 }
