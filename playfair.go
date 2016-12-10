@@ -1,14 +1,23 @@
 package main
 
-import "fmt"
+import ("fmt"
+		"strings")
 
 func main() {
 	keyword :="keyword"
 	x :=0
 	pos := 1
 	alpos :=1
+	c :=0
 	alph := "abcdefghijklmnoprstuvwxyz"
 	letters := [5][5]string{}
+
+	for c<=len(keyword)-1{
+		if strings.Contains(alph , (string([]rune(keyword)[c]))){
+			alph = strings.Replace(alph , (string([]rune(keyword)[c])) , "" , -1)
+		}
+		c++
+	}
 
 	for x<=4{
 		z:=0
