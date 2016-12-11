@@ -1,13 +1,14 @@
 package main
 
 import ("fmt"
-		"strings")
+		"strings"
+		"math")
 
 func main() {
 	keyword :="playfir"
 	letters := initializeDataSet(keyword)
-	encrypt(letters , "ex")
-	unEncrypt(letters , "xm")
+	fmt.Println(splitLetters(letters,"osmosis",true))
+	fmt.Println(splitLetters(letters,"wxuwmctz",false))
 }
 
 func initializeDataSet(keyword string) [5][5]string {
@@ -17,6 +18,15 @@ func initializeDataSet(keyword string) [5][5]string {
 	c :=0
 	alph := "abcdefghijklmnoprstuvwxyz"
 	letters := [5][5]string{}
+
+	q:=1
+	for q<=len(keyword)-1{
+			substring := keyword[q:len(keyword)]
+			holder:= keyword[0:q+1]
+			substring = strings.Replace(substring ,(string([]rune(keyword)[q])) ,"" , -1)
+			keyword = holder + substring
+			q++
+	}
 
 	for c<=len(keyword)-1{
 		if strings.Contains(alph , (string([]rune(keyword)[c]))){
@@ -42,7 +52,7 @@ func initializeDataSet(keyword string) [5][5]string {
 	return letters
 }
 
-func encrypt(data [5][5]string, letters string) {
+func encrypt(data [5][5]string, letters string) string{
 	l1x:=0
 	l2x:=0
 	l1y:=0
@@ -109,11 +119,11 @@ func encrypt(data [5][5]string, letters string) {
 		l1y = l2y
 		l2y = holder
 	}
-
-	fmt.Println(data[l1x][l1y], " ", data[l2x][l2y])
+	returnVal := data[l1x][l1y]+data[l2x][l2y]
+	return (returnVal)
 }
 
-func unEncrypt(data [5][5]string, letters string) {
+func unEncrypt(data [5][5]string, letters string) string{
 	l1x:=0
 	l2x:=0
 	l1y:=0
@@ -184,6 +194,27 @@ func unEncrypt(data [5][5]string, letters string) {
 		l1y = l2y
 		l2y = holder
 	}
-
-	fmt.Println(data[l1x][l1y], " ", data[l2x][l2y])
+	returnVal:=data[l1x][l1y]+data[l2x][l2y]
+	return (returnVal)
+}
+func splitLetters(data [5][5]string , keyword string , encryption bool) string{
+	returnVal := ""
+	z:=0 
+	leng:=float64(len(keyword))
+	if math.Mod(leng,2)!=0{
+		keyword+="x"
+		fmt.Println(keyword)
+	}
+	for z <=len(keyword)-1{
+		if (encryption ==true){
+			returnVal+=encrypt(data , keyword[z:z+2])
+			fmt.Println(keyword[z:z+2], " ", returnVal)
+			z+=2
+			}else{
+			returnVal+=unEncrypt(data , keyword[z:z+2])
+			fmt.Println(keyword[z:z+2], " ", returnVal)
+			z+=2
+			}
+	}
+	return returnVal
 }
